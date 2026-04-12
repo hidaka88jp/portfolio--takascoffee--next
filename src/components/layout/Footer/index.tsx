@@ -22,8 +22,7 @@ export default function Footer() {
         <p className='mb-5'>&copy; 2026 Takanori Hidaka</p>
         <p>Taka&apos;s Coffee is a fictional project created for portfolio purposes.</p>
         <p>
-          Design inspiration: Implemented in React, the UI design inspired by HTML/CSS coding
-          exercises from{' '}
+          UI design is inspired by HTML/CSS coding exercises from{' '}
           <a
             href='https://moshashugyo.com/lessons/cafe'
             className='underline transition-opacity hover:opacity-80'
