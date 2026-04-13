@@ -10,7 +10,7 @@ export default function LinkButton({
   return (
     <Link
       href={href}
-      className='font-display hover:bg-primary relative w-55 bg-black px-6 py-3 text-center text-sm text-white transition duration-75 ease-in-out sm:w-60'
+      className='font-display hover:bg-primary relative w-55 bg-black px-6 py-3 text-center text-sm text-white transition-colors duration-75 ease-in-out sm:w-60'
     >
       <span>{children}</span>
       <span
