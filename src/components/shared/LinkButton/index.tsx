@@ -12,8 +12,11 @@ export default function LinkButton({
       href={href}
       className='font-display hover:bg-primary relative w-55 bg-black px-6 py-3 text-center text-sm text-white transition duration-75 ease-in-out sm:w-60'
     >
-      {children}
-      <div className='absolute top-1/2 right-0 h-px w-6 -translate-px bg-white' />
+      <span>{children}</span>
+      <span
+        aria-hidden='true'
+        className='absolute top-1/2 right-0 h-px w-6 -translate-y-1/2 bg-white'
+      />
     </Link>
   );
 }
