@@ -6,7 +6,7 @@ export type RawTopRecommendedMenu = {
     'wp:featuredmedia'?: {
       media_details?: {
         sizes?: {
-          medium?: {
+          full?: {
             source_url: string;
           };
         };
@@ -37,7 +37,7 @@ export async function getRecommendedMenus(): Promise<TopRecommendedMenu[]> {
       .map((item) => {
         const featuredMedia = item._embedded?.['wp:featuredmedia']?.[0];
         const imageUrl =
-          featuredMedia?.media_details?.sizes?.medium?.source_url ?? featuredMedia?.source_url;
+          featuredMedia?.media_details?.sizes?.full?.source_url ?? featuredMedia?.source_url;
 
         return {
           slug: item.slug,
