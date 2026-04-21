@@ -5,7 +5,7 @@ export default async function Recommended() {
   const recommendedMenus = await getRecommendedMenus();
 
   return (
-    <section>
+    <section className='bg-surface-muted py-16'>
       <TopSectionTitle title='RECOMMENDED' />
 
       {recommendedMenus.map((menu) => (
