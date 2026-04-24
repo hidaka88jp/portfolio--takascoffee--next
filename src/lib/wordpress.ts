@@ -1,6 +1,7 @@
 export type RawTopRecommendedMenu = {
   slug: string;
   title: { rendered: string };
+  menu_order: number;
   acf: { recommended: boolean };
   _embedded?: {
     'wp:featuredmedia'?: {
@@ -34,6 +35,7 @@ export async function getRecommendedMenus(): Promise<TopRecommendedMenu[]> {
 
     const data = rawData
       .filter((item) => item.acf.recommended)
+      .sort((a, b) => a.menu_order - b.menu_order)
       .map((item) => {
         const featuredMedia = item._embedded?.['wp:featuredmedia']?.[0];
         const imageUrl =
