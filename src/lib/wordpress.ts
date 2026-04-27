@@ -24,8 +24,14 @@ export type TopRecommendedMenu = {
 };
 
 export async function getRecommendedMenus(): Promise<TopRecommendedMenu[]> {
+  const apiBaseUrl = process.env.WORDPRESS_API_BASE_URL;
+
+  if (!apiBaseUrl) {
+    throw new Error('WORDPRESS_API_BASE_URL is not defined');
+  }
+
   try {
-    const response = await fetch(`${process.env.WORDPRESS_API_BASE_URL}/menu?_embed`);
+    const response = await fetch(`${apiBaseUrl}/menu?_embed`);
 
     if (!response.ok) {
       throw new Error('Failed to fetch recommended menu');
