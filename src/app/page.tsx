@@ -1,6 +1,7 @@
 import Hero from '@/components/top/Hero';
 import Concept from '@/components/top/Concept';
 import Recommended from '@/components/top/Recommended';
+import TopBlog from '@/components/top/TopBlog';
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <Concept />
       <Recommended />
+      <TopBlog />
     </div>
   );
 }
