@@ -1,4 +1,4 @@
-export type RawTopRecommendedMenu = {
+type RawTopRecommendedMenu = {
   slug: string;
   title: { rendered: string };
   menu_order: number;
@@ -17,13 +17,13 @@ export type RawTopRecommendedMenu = {
   };
 };
 
-export type TopRecommendedMenu = {
+type TopRecommendedMenu = {
   slug: string;
   title: string;
   imageUrl?: string;
 };
 
-export type RawTopBlogPost = {
+type RawTopBlogPost = {
   slug: string;
   title: { rendered: string };
   date: string;
@@ -41,7 +41,7 @@ export type RawTopBlogPost = {
   };
 };
 
-export type TopBlogPost = {
+type TopBlogPost = {
   slug: string;
   title: string;
   publishedAt: string;
