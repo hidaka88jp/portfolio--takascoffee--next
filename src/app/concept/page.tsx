@@ -1,7 +1,16 @@
-export default function Concept() {
+// src/app/concept/page.tsx
+import { Suspense } from 'react';
+
+import { ConceptContent } from '@/components/concept/ConceptContent';
+
+export default function ConceptPage() {
   return (
-    <section>
-      <p>Concept</p>
-    </section>
+    <>
+      <section>
+        <Suspense fallback={<p>Loading concept...</p>}>
+          <ConceptContent />
+        </Suspense>
+      </section>
+    </>
   );
 }
