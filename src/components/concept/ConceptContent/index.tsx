@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import { getConceptPage } from '@/lib/wordpress';
 
-export async function ConceptContent() {
+export default async function ConceptContent() {
   const conceptPage = await getConceptPage();
 
   if (!conceptPage) {
