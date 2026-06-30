@@ -5,7 +5,7 @@ import TopBlogList from '../TopBlogList';
 
 export default async function TopBlog() {
   return (
-    <section className='flex flex-col gap-10 overflow-x-hidden pb-16'>
+    <section className='flex flex-col gap-10 overflow-x-hidden'>
       <TopSectionTitle title='BLOG' />
       <Suspense fallback={<div className='mx-auto w-fit'>Loading...</div>}>
         <TopBlogList />
