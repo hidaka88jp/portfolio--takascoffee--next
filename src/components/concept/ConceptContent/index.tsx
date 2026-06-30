@@ -21,7 +21,7 @@ export default async function ConceptContent() {
       <div className='mx-auto flex max-w-240 flex-col gap-10'>
         {conceptPage.sections.map((section, index) => (
           <section
-            key={section.title}
+            key={`concept-section-${index}`}
             className={clsx(
               'flex flex-col gap-4 sm:gap-8',
               index % 2 === 1 ? 'sm:flex-row-reverse' : 'sm:flex-row'
