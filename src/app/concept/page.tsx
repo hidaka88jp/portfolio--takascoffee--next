@@ -8,7 +8,15 @@ export default function ConceptPage() {
   return (
     <div className='flex flex-col gap-16'>
       <PageHero title='CONCEPT' imageSrc='/common/concept-hero.webp' />
-      <Suspense fallback={<p>Loading concept...</p>}>
+      <Suspense
+        fallback={
+          <div className='px-4'>
+            <div className='mx-auto max-w-240'>
+              <p>Loading concept...</p>
+            </div>
+          </div>
+        }
+      >
         <ConceptContent />
       </Suspense>
       <div className='flex justify-center'>
