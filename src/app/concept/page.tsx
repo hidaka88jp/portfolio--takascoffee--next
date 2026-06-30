@@ -5,11 +5,11 @@ import PageHero from '@/components/shared/PageHero';
 
 export default function ConceptPage() {
   return (
-    <section className='flex flex-col gap-16'>
+    <div className='flex flex-col gap-16'>
       <PageHero title='CONCEPT' imageSrc='/common/concept-hero.webp' />
       <Suspense fallback={<p>Loading concept...</p>}>
         <ConceptContent />
       </Suspense>
-    </section>
+    </div>
   );
 }
