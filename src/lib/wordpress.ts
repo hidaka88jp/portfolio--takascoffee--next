@@ -97,7 +97,6 @@ type RawMenuItem = {
   content: {
     rendered: string;
   };
-  menu_category: number[];
   acf: {
     price: number;
   };
@@ -113,6 +112,9 @@ type RawMenuItem = {
       source_url?: string;
       alt_text?: string;
     }[];
+    'wp:term'?: {
+      slug: string;
+    }[][];
   };
 };
 
@@ -121,7 +123,7 @@ type MenuItem = {
   slug: string;
   title: string;
   description: string;
-  categoryId: number;
+  categorySlug: string;
   price: number;
   imageUrl?: string;
   imageAlt: string;
@@ -277,11 +279,13 @@ export async function getMenuItems(): Promise<MenuItem[]> {
       const imageUrl =
         featuredMedia?.media_details?.sizes?.full?.source_url ?? featuredMedia?.source_url;
 
+      const category = item._embedded?.['wp:term']?.[0]?.[0];
+
       return {
         id: item.id,
         slug: item.slug,
         title: item.title.rendered,
-        categoryId: item.menu_category[0] ?? 0,
+        categorySlug: category?.slug ?? '',
         description: item.content.rendered,
         price: item.acf.price,
         imageUrl,
