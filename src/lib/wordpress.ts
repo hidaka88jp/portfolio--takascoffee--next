@@ -97,7 +97,6 @@ type RawMenuItem = {
   content: {
     rendered: string;
   };
-  menu_order: number;
   acf: {
     price: number;
     recommended: boolean;
@@ -118,7 +117,6 @@ type RawMenuItem = {
     'wp:term'?: {
       name: string;
       slug: string;
-      taxonomy: string;
     }[][];
   };
 };
@@ -129,7 +127,6 @@ type MenuItem = {
   title: string;
   description: string;
   price: number;
-  menuOrder: number;
   category: {
     name: string;
     slug: string;
@@ -296,7 +293,6 @@ export async function getMenuItems(): Promise<MenuItem[]> {
         title: item.title.rendered,
         description: item.content.rendered,
         price: item.acf.price,
-        menuOrder: item.menu_order,
         category: {
           name: category?.name ?? '',
           slug: category?.slug ?? '',
