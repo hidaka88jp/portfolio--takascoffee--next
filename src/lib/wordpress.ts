@@ -97,10 +97,9 @@ type RawMenuItem = {
   content: {
     rendered: string;
   };
+  menu_category: number[];
   acf: {
     price: number;
-    recommended: boolean;
-    recommended_items?: number[];
   };
   _embedded?: {
     'wp:featuredmedia'?: {
@@ -114,10 +113,6 @@ type RawMenuItem = {
       source_url?: string;
       alt_text?: string;
     }[];
-    'wp:term'?: {
-      name: string;
-      slug: string;
-    }[][];
   };
 };
 
@@ -126,11 +121,8 @@ type MenuItem = {
   slug: string;
   title: string;
   description: string;
+  categoryId: number;
   price: number;
-  category: {
-    name: string;
-    slug: string;
-  };
   imageUrl?: string;
   imageAlt: string;
 };
@@ -285,18 +277,13 @@ export async function getMenuItems(): Promise<MenuItem[]> {
       const imageUrl =
         featuredMedia?.media_details?.sizes?.full?.source_url ?? featuredMedia?.source_url;
 
-      const category = item._embedded?.['wp:term']?.[0]?.[0];
-
       return {
         id: item.id,
         slug: item.slug,
         title: item.title.rendered,
+        categoryId: item.menu_category[0] ?? 0,
         description: item.content.rendered,
         price: item.acf.price,
-        category: {
-          name: category?.name ?? '',
-          slug: category?.slug ?? '',
-        },
         imageUrl,
         imageAlt: featuredMedia?.alt_text ?? '',
       };
