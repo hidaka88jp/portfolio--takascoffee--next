@@ -12,7 +12,7 @@ export default function MenuPage() {
         fallback={
           <div className='px-4'>
             <div className='mx-auto max-w-240'>
-              <p>Loading concept...</p>
+              <p>Loading menu...</p>
             </div>
           </div>
         }
