@@ -42,7 +42,7 @@ export default async function MenuList() {
               <div>
                 <h3 className='mb-2 text-lg font-semibold'>{item.title}</h3>
                 <p className='mb-4'>${item.price.toFixed(2)}</p>
-                <div dangerouslySetInnerHTML={{ __html: item.description }} />
+                <p>{item.description}</p>
               </div>
             </Link>
           </li>

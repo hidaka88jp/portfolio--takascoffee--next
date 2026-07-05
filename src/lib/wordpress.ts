@@ -1,3 +1,5 @@
+import { convert } from 'html-to-text';
+
 type RawTopRecommendedMenu = {
   slug: string;
   title: { rendered: string };
@@ -286,7 +288,9 @@ export async function getMenuItems(): Promise<MenuItem[]> {
         slug: item.slug,
         title: item.title.rendered,
         categorySlug: category?.slug ?? '',
-        description: item.content.rendered,
+        description: convert(item.content.rendered, {
+          wordwrap: false,
+        }),
         price: item.acf.price,
         imageUrl,
         imageAlt: featuredMedia?.alt_text ?? '',
