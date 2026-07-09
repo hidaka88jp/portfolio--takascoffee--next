@@ -9,7 +9,7 @@ export default async function TopBlogList() {
   return (
     <ul className='mx-auto grid w-fit grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3'>
       {topBlogPosts.map((post) => {
-        const imageSrc = post.imageUrl ? post.imageUrl : '/common/blog-placeholder.webp';
+        const imageSrc = post.imageUrl ? post.imageUrl : '/common/placeholder.webp';
 
         return (
           <li key={post.slug}>
