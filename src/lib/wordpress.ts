@@ -387,7 +387,7 @@ export async function getMenuItemBySlug(slug: string): Promise<MenuDetail | null
   }
 
   try {
-    const res = await fetch(`${apiBaseUrl}/menu?slug=${slug}&_embed`);
+    const res = await fetch(`${apiBaseUrl}/menu?slug=${encodeURIComponent(slug)}&_embed`);
 
     if (!res.ok) {
       throw new Error('Failed to fetch menu item by slug');
