@@ -460,6 +460,6 @@ export async function getMenuItemBySlug(slug: string): Promise<MenuDetail | null
     };
   } catch (error) {
     console.error('Error fetching menu item by slug:', error);
-    return null;
+    throw error;
   }
 }
