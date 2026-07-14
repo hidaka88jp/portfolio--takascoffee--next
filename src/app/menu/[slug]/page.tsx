@@ -1,9 +1,14 @@
 import { Suspense } from 'react';
-
+import MenuDetailContent from '@/components/menu/MenuDetailContent';
 import LinkButton from '@/components/shared/LinkButton';
-import MenuList from '@/components/menu/MenuList';
 
-export default function MenuPage() {
+type Props = {
+  params: Promise<{
+    slug: string;
+  }>;
+};
+
+export default function MenuDetailPage({ params }: Props) {
   return (
     <div className='flex flex-col gap-16'>
       <Suspense
@@ -15,10 +20,10 @@ export default function MenuPage() {
           </div>
         }
       >
-        <MenuList />
+        <MenuDetailContent params={params} />
       </Suspense>
       <div className='flex justify-center'>
-        <LinkButton href='/'>TOP</LinkButton>
+        <LinkButton href='/menu'>MENU</LinkButton>
       </div>
     </div>
   );
