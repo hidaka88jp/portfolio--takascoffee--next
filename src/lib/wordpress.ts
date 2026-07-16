@@ -25,7 +25,7 @@ type TopRecommendedMenu = {
   imageUrl?: string;
 };
 
-type RawTopBlogPost = {
+type RawBlogPost = {
   slug: string;
   title: { rendered: string };
   date: string;
@@ -43,7 +43,7 @@ type RawTopBlogPost = {
   };
 };
 
-type TopBlogPost = {
+type BlogPost = {
   slug: string;
   title: string;
   publishedAt: string;
@@ -244,7 +244,7 @@ export async function getRecommendedMenus(): Promise<TopRecommendedMenu[]> {
   }
 }
 
-export async function getTopBlogPosts(): Promise<TopBlogPost[]> {
+export async function getTopBlogPosts(): Promise<BlogPost[]> {
   const apiBaseUrl = process.env.WORDPRESS_API_BASE_URL;
 
   if (!apiBaseUrl) {
@@ -258,7 +258,7 @@ export async function getTopBlogPosts(): Promise<TopBlogPost[]> {
       throw new Error('Failed to fetch top blog posts');
     }
 
-    const rawData: RawTopBlogPost[] = await response.json();
+    const rawData: RawBlogPost[] = await response.json();
 
     const data = rawData.map((item) => {
       const featuredMedia = item._embedded?.['wp:featuredmedia']?.[0];
