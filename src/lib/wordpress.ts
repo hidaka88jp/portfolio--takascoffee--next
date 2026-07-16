@@ -50,6 +50,11 @@ type BlogPost = {
   imageUrl?: string;
 };
 
+type BlogPostsResult = {
+  posts: BlogPost[]; //
+  totalPages: number;
+};
+
 type RawAcfImage = {
   id: number;
   url: string;
@@ -204,6 +209,10 @@ type MenuDetail = {
     alt: string;
   };
   recommendedItems: RecommendedMenuItem[];
+};
+
+type WordPressErrorResponse = {
+  code?: string;
 };
 
 export async function getRecommendedMenus(): Promise<TopRecommendedMenu[]> {
@@ -460,6 +469,51 @@ export async function getMenuItemBySlug(slug: string): Promise<MenuDetail | null
     };
   } catch (error) {
     console.error('Error fetching menu item by slug:', error);
+    throw error;
+  }
+}
+
+export async function getBlogPosts(page: number): Promise<BlogPostsResult | null> {
+  const apiBaseUrl = process.env.WORDPRESS_API_BASE_URL;
+
+  if (!apiBaseUrl) {
+    throw new Error('WORDPRESS_API_BASE_URL is not defined');
+  }
+
+  try {
+    const res = await fetch(
+      `${apiBaseUrl}/posts?_embed&per_page=6&page=${page}&orderby=date&order=desc`
+    );
+
+    if (!res.ok) {
+      const errorData = (await res.json()) as WordPressErrorResponse;
+
+      if (res.status === 400 && errorData.code === 'rest_post_invalid_page_number') {
+        return null;
+      }
+
+      throw new Error('Failed to fetch blog posts');
+    }
+
+    const rawPosts: RawBlogPost[] = await res.json();
+    const totalPages = Number(res.headers.get('X-WP-TotalPages') ?? '0');
+
+    const posts = rawPosts.map((item) => {
+      const featuredMedia = item._embedded?.['wp:featuredmedia']?.[0];
+      const imageUrl =
+        featuredMedia?.media_details?.sizes?.full?.source_url ?? featuredMedia?.source_url;
+
+      return {
+        slug: item.slug,
+        title: item.title.rendered,
+        publishedAt: item.date,
+        imageUrl,
+      };
+    });
+
+    return { posts, totalPages };
+  } catch (error) {
+    console.error('Error fetching blog posts:', error);
     throw error;
   }
 }
