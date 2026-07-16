@@ -1,10 +1,24 @@
+import { Suspense } from 'react';
+
+import LinkButton from '@/components/shared/LinkButton';
+import BlogList from '@/components/blog/BlogList';
+
 export default function BlogPage() {
   return (
-    <div className='px-4'>
-      <div className='mx-auto max-w-240'>
-        <h1 className='mb-2 text-xl font-semibold'>Blog</h1>
-        <div className='mb-3 h-1 w-8 bg-black' />
-        <p>Blog page content goes here.</p>
+    <div className='flex flex-col gap-16'>
+      <Suspense
+        fallback={
+          <div className='px-4'>
+            <div className='mx-auto max-w-240'>
+              <p>Loading blog...</p>
+            </div>
+          </div>
+        }
+      >
+        <BlogList />
+      </Suspense>
+      <div className='flex justify-center'>
+        <LinkButton href='/'>TOP</LinkButton>
       </div>
     </div>
   );
