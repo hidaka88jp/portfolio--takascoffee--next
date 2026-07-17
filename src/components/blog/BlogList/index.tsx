@@ -1,19 +1,25 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { getBlogPosts } from '@/lib/wordpress';
 import { formatDate } from '@/lib/date';
 
-export default async function BlogList() {
-  const blogPosts = await getBlogPosts(1);
+type Props = {
+  searchParams: Promise<{ page?: string }>;
+};
 
-  if (!blogPosts || blogPosts.posts.length === 0) {
-    return (
-      <div className='px-4'>
-        <div className='mx-auto flex max-w-240 justify-center'>
-          <p>Blog posts are currently unavailable.</p>
-        </div>
-      </div>
-    );
+export default async function BlogList({ searchParams }: Props) {
+  const { page } = await searchParams;
+  const pageNumber = Number(page ?? '1');
+
+  if (!Number.isInteger(pageNumber) || pageNumber < 1) {
+    notFound();
+  }
+
+  const blogPosts = await getBlogPosts(pageNumber);
+
+  if (!blogPosts) {
+    notFound();
   }
 
   return (

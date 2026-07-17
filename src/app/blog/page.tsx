@@ -3,7 +3,11 @@ import { Suspense } from 'react';
 import LinkButton from '@/components/shared/LinkButton';
 import BlogList from '@/components/blog/BlogList';
 
-export default function BlogPage() {
+type PageProps = {
+  searchParams: Promise<{ page?: string }>;
+};
+
+export default async function BlogPage({ searchParams }: PageProps) {
   return (
     <div className='flex flex-col gap-16'>
       <Suspense
@@ -15,7 +19,7 @@ export default function BlogPage() {
           </div>
         }
       >
-        <BlogList />
+        <BlogList searchParams={searchParams} />
       </Suspense>
       <div className='flex justify-center'>
         <LinkButton href='/'>TOP</LinkButton>
