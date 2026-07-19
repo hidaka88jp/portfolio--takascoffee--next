@@ -51,7 +51,7 @@ type BlogPost = {
 };
 
 type BlogPostsResult = {
-  posts: BlogPost[]; //
+  posts: BlogPost[];
   totalPages: number;
 };
 
