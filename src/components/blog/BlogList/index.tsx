@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getBlogPosts } from '@/lib/wordpress';
 import { formatDate } from '@/lib/date';
+import Pagination from '@/components/blog/Pagination';
 
 type Props = {
   searchParams: Promise<{ page?: string }>;
@@ -23,7 +24,7 @@ export default async function BlogList({ searchParams }: Props) {
   }
 
   return (
-    <div className='px-4'>
+    <div className='flex flex-col gap-12 px-4'>
       <ul className='mx-auto grid w-fit max-w-240 grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3'>
         {blogPosts.posts.map((post) => {
           const imageSrc = post.imageUrl ?? '/common/blog-placeholder.webp';
@@ -49,6 +50,7 @@ export default async function BlogList({ searchParams }: Props) {
           );
         })}
       </ul>
+      <Pagination currentPage={pageNumber} totalPages={blogPosts.totalPages} />
     </div>
   );
 }
