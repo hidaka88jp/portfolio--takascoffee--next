@@ -23,6 +23,8 @@ export default async function BlogList({ searchParams }: Props) {
     notFound();
   }
 
+  const blogListUrl = pageNumber === 1 ? '/blog' : `/blog?page=${pageNumber}`;
+
   return (
     <div className='flex flex-col gap-12 px-4'>
       <ul className='mx-auto grid w-fit max-w-240 grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3'>
@@ -32,7 +34,12 @@ export default async function BlogList({ searchParams }: Props) {
           return (
             <li key={post.slug}>
               <Link
-                href={`/blog/${post.slug}`}
+                href={{
+                  pathname: `/blog/${post.slug}`,
+                  query: {
+                    from: blogListUrl,
+                  },
+                }}
                 className='group focus-visible:outline-primary flex flex-col gap-2 focus-visible:outline-2 focus-visible:outline-offset-4'
               >
                 <div className='relative h-75 w-75 overflow-hidden'>
