@@ -55,6 +55,45 @@ type BlogPostsResult = {
   totalPages: number;
 };
 
+type RawBlogDetail = {
+  date: string;
+  title: {
+    rendered: string;
+  };
+  content: {
+    rendered: string;
+  };
+  _embedded?: {
+    'wp:featuredmedia'?: {
+      alt_text: string;
+      source_url: string;
+      media_details?: {
+        sizes?: {
+          full?: {
+            source_url: string;
+          };
+        };
+      };
+    }[];
+  };
+};
+
+type RawAdjacentBlogPost = {
+  slug: string;
+};
+
+export type BlogDetail = {
+  title: string;
+  publishedAt: string;
+  content: string;
+  image?: {
+    url: string;
+    alt: string;
+  };
+  previousSlug?: string;
+  nextSlug?: string;
+};
+
 type RawAcfImage = {
   id: number;
   url: string;
@@ -514,6 +553,86 @@ export async function getBlogPosts(page: number): Promise<BlogPostsResult | null
     return { posts, totalPages };
   } catch (error) {
     console.error('Error fetching blog posts:', error);
+    throw error;
+  }
+}
+
+async function getAdjacentBlogPostSlug(
+  url: string,
+  direction: 'previous' | 'next'
+): Promise<string | undefined> {
+  try {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch ${direction} blog post: ${res.status}`);
+    }
+
+    const posts: RawAdjacentBlogPost[] = await res.json();
+
+    return posts[0]?.slug;
+  } catch (error) {
+    console.error(`Error fetching ${direction} blog post:`, error);
+
+    return undefined;
+  }
+}
+
+export async function getBlogPostBySlug(slug: string): Promise<BlogDetail | null> {
+  const apiBaseUrl = process.env.WORDPRESS_API_BASE_URL;
+
+  if (!apiBaseUrl) {
+    throw new Error('WORDPRESS_API_BASE_URL is not defined');
+  }
+
+  try {
+    const res = await fetch(`${apiBaseUrl}/posts?slug=${encodeURIComponent(slug)}&_embed`);
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch blog post by slug: ${res.status}`);
+    }
+
+    const rawPosts: RawBlogDetail[] = await res.json();
+    const post = rawPosts[0];
+
+    if (!post) {
+      return null;
+    }
+
+    const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
+
+    const imageUrl =
+      featuredMedia?.media_details?.sizes?.full?.source_url ?? featuredMedia?.source_url;
+
+    const encodedDate = encodeURIComponent(post.date);
+
+    const [previousSlug, nextSlug] = await Promise.all([
+      getAdjacentBlogPostSlug(
+        `${apiBaseUrl}/posts?before=${encodedDate}&per_page=1&orderby=date&order=desc&_fields=slug`,
+        'previous'
+      ),
+      getAdjacentBlogPostSlug(
+        `${apiBaseUrl}/posts?after=${encodedDate}&per_page=1&orderby=date&order=asc&_fields=slug`,
+        'next'
+      ),
+    ]);
+
+    return {
+      title: post.title.rendered,
+      publishedAt: post.date,
+      content: post.content.rendered,
+      image: imageUrl
+        ? {
+            url: imageUrl,
+            alt: featuredMedia?.alt_text ?? '',
+          }
+        : undefined,
+      previousSlug,
+      nextSlug,
+    };
+  } catch (error) {
+    console.error('Error fetching blog post by slug:', error);
+
     throw error;
   }
 }
