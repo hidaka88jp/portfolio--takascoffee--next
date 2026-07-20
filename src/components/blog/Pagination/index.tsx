@@ -50,11 +50,12 @@ const getPaginationItems = (currentPage: number, totalPages: number): Pagination
 export default function Pagination({ currentPage, totalPages }: Props) {
   const pages = getPaginationItems(currentPage, totalPages);
 
-  const baseClass = 'border border-black flex items-center justify-center w-10 h-10';
+  const baseClass =
+    'flex size-8 shrink-0 items-center justify-center border border-black sm:size-10';
 
   return (
     <nav aria-label='Blog pagination'>
-      <ul className='flex justify-center gap-2'>
+      <ul className='flex items-center justify-center gap-1.5 sm:gap-3'>
         <li>
           {currentPage > 1 ? (
             <Link
@@ -75,7 +76,10 @@ export default function Pagination({ currentPage, totalPages }: Props) {
           if (typeof page !== 'number') {
             return (
               <li key={page}>
-                <span className='flex h-10 w-5 items-end justify-center' aria-hidden='true'>
+                <span
+                  className='flex h-10 w-3 shrink-0 items-end justify-center sm:h-10 sm:w-10'
+                  aria-hidden='true'
+                >
                   …
                 </span>
               </li>
