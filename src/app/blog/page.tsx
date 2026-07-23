@@ -14,7 +14,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
         fallback={
           <div className='px-4'>
             <div className='mx-auto max-w-240'>
-              <p>Loading blog...</p>
+              <p>Loading blog post...</p>
             </div>
           </div>
         }

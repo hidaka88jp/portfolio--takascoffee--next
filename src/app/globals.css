@@ -5,5 +5,14 @@
   --font-display: var(--font-montserrat);
 
   --color-primary: #524433;
-  --color-surface-muted: #EFEDE9;
+  --color-surface-muted: #efede9;
+}
+
+/* content css */
+.content h2 {
+  @apply mt-8 mb-2 text-xl font-bold;
+}
+
+.content img {
+  @apply mb-4;
 }
