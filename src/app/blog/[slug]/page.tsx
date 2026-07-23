@@ -10,7 +10,7 @@ type Props = {
   }>;
 };
 
-export default async function BlogDetailPage({ params, searchParams }: Props) {
+export default function BlogDetailPage({ params, searchParams }: Props) {
   return (
     <Suspense
       fallback={
