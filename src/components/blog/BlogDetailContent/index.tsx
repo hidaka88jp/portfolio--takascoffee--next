@@ -24,7 +24,7 @@ export default async function BlogDetailContent({ params, searchParams }: Props)
   const { from } = await searchParams;
 
   const backHref =
-    typeof from === 'string' && (from === '/blog' || /^\/blog\?page=[1-9]$/.test(from))
+    typeof from === 'string' && (from === '/blog' || /^\/blog\?page=[1-9]\d*$/.test(from))
       ? from
       : '/blog';
 
