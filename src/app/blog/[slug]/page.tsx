@@ -16,7 +16,7 @@ export default async function BlogDetailPage({ params, searchParams }: Props) {
       fallback={
         <div className='px-4'>
           <div className='mx-auto max-w-240'>
-            <p>Loading menu...</p>
+            <p>Loading blog post...</p>
           </div>
         </div>
       }
