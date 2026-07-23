@@ -65,8 +65,8 @@ type RawBlogDetail = {
   };
   _embedded?: {
     'wp:featuredmedia'?: {
-      alt_text: string;
-      source_url: string;
+      alt_text?: string;
+      source_url?: string;
       media_details?: {
         sizes?: {
           full?: {
