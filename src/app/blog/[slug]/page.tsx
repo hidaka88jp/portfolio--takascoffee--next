@@ -11,13 +11,6 @@ type Props = {
 };
 
 export default async function BlogDetailPage({ params, searchParams }: Props) {
-  const { from } = await searchParams;
-
-  const backHref =
-    typeof from === 'string' && (from === '/blog' || /^\/blog\?page=[2-9]$/.test(from))
-      ? from
-      : '/blog';
-
   return (
     <Suspense
       fallback={
@@ -28,7 +21,7 @@ export default async function BlogDetailPage({ params, searchParams }: Props) {
         </div>
       }
     >
-      <BlogDetailContent params={params} backHref={backHref} />
+      <BlogDetailContent params={params} searchParams={searchParams} />
     </Suspense>
   );
 }

@@ -8,16 +8,25 @@ type Props = {
   params: Promise<{
     slug: string;
   }>;
-  backHref: string;
+  searchParams: Promise<{
+    from?: string | string[];
+  }>;
 };
 
-export default async function BlogDetailContent({ params, backHref }: Props) {
+export default async function BlogDetailContent({ params, searchParams }: Props) {
   const { slug } = await params;
   const blogPost = await getBlogPostBySlug(slug);
 
   if (!blogPost) {
     notFound();
   }
+
+  const { from } = await searchParams;
+
+  const backHref =
+    typeof from === 'string' && (from === '/blog' || /^\/blog\?page=[1-9]$/.test(from))
+      ? from
+      : '/blog';
 
   return (
     <div className='px-4'>
