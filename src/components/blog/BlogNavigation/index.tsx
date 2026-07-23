@@ -6,7 +6,7 @@ type Props = {
   backHref: string;
 };
 
-export default function BlogNavigation({ previousSlug, nextSlug, backHref }: Props) {
+export default async function BlogNavigation({ previousSlug, nextSlug, backHref }: Props) {
   const baseClass =
     'font-display hover:bg-primary relative block bg-black py-3 text-center text-sm text-white transition-colors duration-75 ease-in-out';
 

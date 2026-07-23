@@ -8,9 +8,10 @@ type Props = {
   params: Promise<{
     slug: string;
   }>;
+  backHref: string;
 };
 
-export default async function BlogDetailContent({ params }: Props) {
+export default async function BlogDetailContent({ params, backHref }: Props) {
   const { slug } = await params;
   const blogPost = await getBlogPostBySlug(slug);
 
@@ -37,7 +38,7 @@ export default async function BlogDetailContent({ params }: Props) {
         <BlogNavigation
           previousSlug={blogPost.previousSlug}
           nextSlug={blogPost.nextSlug}
-          backHref='/blog'
+          backHref={backHref}
         />
       </div>
     </div>
