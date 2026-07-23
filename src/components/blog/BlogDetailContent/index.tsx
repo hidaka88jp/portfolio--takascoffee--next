@@ -40,7 +40,7 @@ export default async function BlogDetailContent({ params, searchParams }: Props)
             alt={blogPost.image?.alt ?? ''}
             className='object-cover'
             fill
-            sizes='(min-width: 640px) 300px, 100vw'
+            sizes='(min-width: 640px) 640px, 100vw'
           />
         </div>
         <div className='content' dangerouslySetInnerHTML={{ __html: blogPost.content }} />
