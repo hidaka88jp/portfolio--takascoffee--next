@@ -10,8 +10,10 @@ const siteUrl = process.env.SITE_URL.replace(/\/$/, '');
 const buildUrl = (path = '') => `${siteUrl}${path}`;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const menuEntries = await getMenuSitemapEntries();
-  const blogEntries = await getBlogSitemapEntries();
+  const [menuEntries, blogEntries] = await Promise.all([
+    getMenuSitemapEntries(),
+    getBlogSitemapEntries(),
+  ]);
 
   const staticPages: MetadataRoute.Sitemap = [
     {
