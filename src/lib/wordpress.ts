@@ -254,6 +254,16 @@ type WordPressErrorResponse = {
   code?: string;
 };
 
+type RawSitemapEntry = {
+  slug: string;
+  modified_gmt: string;
+};
+
+type SitemapEntry = {
+  slug: string;
+  lastModified: Date;
+};
+
 export async function getRecommendedMenus(): Promise<TopRecommendedMenu[]> {
   const apiBaseUrl = process.env.WORDPRESS_API_BASE_URL;
 
@@ -633,6 +643,34 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogDetail | null
   } catch (error) {
     console.error('Error fetching blog post by slug:', error);
 
+    throw error;
+  }
+}
+
+const formatSitemapEntry = (entry: RawSitemapEntry): SitemapEntry => ({
+  slug: entry.slug,
+  lastModified: new Date(`${entry.modified_gmt}Z`),
+});
+
+export async function getMenuSitemapEntries(): Promise<SitemapEntry[]> {
+  const apiBaseUrl = process.env.WORDPRESS_API_BASE_URL;
+
+  if (!apiBaseUrl) {
+    throw new Error('WORDPRESS_API_BASE_URL is not defined');
+  }
+
+  try {
+    const res = await fetch(`${apiBaseUrl}/menu?_fields=slug,modified_gmt&per_page=100`);
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch menu sitemap entries');
+    }
+
+    const rawEntries: RawSitemapEntry[] = await res.json();
+    const entries: SitemapEntry[] = rawEntries.map(formatSitemapEntry);
+    return entries;
+  } catch (error) {
+    console.error('Error fetching menu sitemap entries:', error);
     throw error;
   }
 }
