@@ -674,3 +674,47 @@ export async function getMenuSitemapEntries(): Promise<SitemapEntry[]> {
     throw error;
   }
 }
+
+export async function getBlogSitemapEntries(): Promise<SitemapEntry[]> {
+  const apiBaseUrl = process.env.WORDPRESS_API_BASE_URL;
+
+  if (!apiBaseUrl) {
+    throw new Error('WORDPRESS_API_BASE_URL is not defined');
+  }
+
+  try {
+    const res = await fetch(`${apiBaseUrl}/posts?_fields=slug,modified_gmt&per_page=6&page=1`);
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch blog sitemap entries');
+    }
+
+    const totalPages = Number(res.headers.get('X-WP-TotalPages') ?? '1');
+
+    const firstPageEntries: RawSitemapEntry[] = await res.json();
+
+    const remainingPageNumbers = Array.from({ length: totalPages - 1 }, (_, index) => index + 2);
+
+    const remainingPageEntries = await Promise.all(
+      remainingPageNumbers.map(async (page): Promise<RawSitemapEntry[]> => {
+        const response = await fetch(
+          `${apiBaseUrl}/posts?_fields=slug,modified_gmt&per_page=6&page=${page}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch blog sitemap entries: page ${page}`);
+        }
+
+        return response.json();
+      })
+    );
+
+    const rawEntries = [firstPageEntries, ...remainingPageEntries].flat();
+    const entries: SitemapEntry[] = rawEntries.map(formatSitemapEntry);
+
+    return entries;
+  } catch (error) {
+    console.error('Error fetching blog sitemap entries:', error);
+    throw error;
+  }
+}

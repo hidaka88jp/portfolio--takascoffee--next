@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { getMenuSitemapEntries } from '@/lib/wordpress';
+import { getMenuSitemapEntries, getBlogSitemapEntries } from '@/lib/wordpress';
 
 if (!process.env.SITE_URL) {
   throw new Error('SITE_URL is not defined');
@@ -11,6 +11,7 @@ const buildUrl = (path = '') => `${siteUrl}${path}`;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const menuEntries = await getMenuSitemapEntries();
+  const blogEntries = await getBlogSitemapEntries();
 
   const staticPages: MetadataRoute.Sitemap = [
     {
@@ -36,5 +37,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: entry.lastModified,
   }));
 
-  return [...staticPages, ...menuPages];
+  const blogPages: MetadataRoute.Sitemap = blogEntries.map((entry) => ({
+    url: buildUrl(`/blog/${entry.slug}`),
+    lastModified: entry.lastModified,
+  }));
+
+  return [...staticPages, ...menuPages, ...blogPages];
 }
