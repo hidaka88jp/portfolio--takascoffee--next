@@ -1,3 +1,4 @@
+import { cacheLife } from 'next/cache';
 import { convert } from 'html-to-text';
 
 type RawTopRecommendedMenu = {
@@ -653,6 +654,9 @@ const formatSitemapEntry = (entry: RawSitemapEntry): SitemapEntry => ({
 });
 
 export async function getMenuSitemapEntries(): Promise<SitemapEntry[]> {
+  'use cache';
+  cacheLife('days');
+
   const apiBaseUrl = process.env.WORDPRESS_API_BASE_URL;
 
   if (!apiBaseUrl) {
@@ -676,6 +680,9 @@ export async function getMenuSitemapEntries(): Promise<SitemapEntry[]> {
 }
 
 export async function getBlogSitemapEntries(): Promise<SitemapEntry[]> {
+  'use cache';
+  cacheLife('days');
+
   const apiBaseUrl = process.env.WORDPRESS_API_BASE_URL;
 
   if (!apiBaseUrl) {
