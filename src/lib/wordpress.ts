@@ -683,7 +683,7 @@ export async function getBlogSitemapEntries(): Promise<SitemapEntry[]> {
   }
 
   try {
-    const res = await fetch(`${apiBaseUrl}/posts?_fields=slug,modified_gmt&per_page=6&page=1`);
+    const res = await fetch(`${apiBaseUrl}/posts?_fields=slug,modified_gmt&per_page=100&page=1`);
 
     if (!res.ok) {
       throw new Error('Failed to fetch blog sitemap entries');
@@ -698,7 +698,7 @@ export async function getBlogSitemapEntries(): Promise<SitemapEntry[]> {
     const remainingPageEntries = await Promise.all(
       remainingPageNumbers.map(async (page): Promise<RawSitemapEntry[]> => {
         const response = await fetch(
-          `${apiBaseUrl}/posts?_fields=slug,modified_gmt&per_page=6&page=${page}`
+          `${apiBaseUrl}/posts?_fields=slug,modified_gmt&per_page=100&page=${page}`
         );
 
         if (!response.ok) {
