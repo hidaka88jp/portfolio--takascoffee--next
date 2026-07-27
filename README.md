@@ -97,7 +97,7 @@ Through this experience, I learned that previously studied approaches do not nec
 
 > The WordPress instance used as the headless CMS was originally created for my [previous WordPress theme project](https://github.com/hidaka88jp/portfolio--takascoffee--wp) and is hosted on AWS Lightsail.
 
-<br><br>
+<br>
 
 ## License
 
