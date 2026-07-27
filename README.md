@@ -68,29 +68,29 @@ Through this experience, I learned that previously studied approaches do not nec
   <tr>
     <th>Frontend</th>
     <td>
-      <img src="https://img.shields.io/badge/Next.js-4C4D59.svg?logo=nextdotjs&logoColor=efefef">
-      <img src="https://img.shields.io/badge/TypeScript-3178C6.svg?logo=typescript&logoColor=efefef">
-      <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4.svg?logo=tailwindcss&logoColor=efefef">
+      <img src="https://img.shields.io/badge/Next.js-4C4D59.svg?logo=nextdotjs&logoColor=efefef" alt="Next.js">
+      <img src="https://img.shields.io/badge/TypeScript-3178C6.svg?logo=typescript&logoColor=efefef" alt="TypeScript">
+      <img src="https://img.shields.io/badge/Tailwind CSS-06B6D4.svg?logo=tailwindcss&logoColor=efefef" alt="Tailwind CSS">
     </td>
   </tr>
   <tr>
     <th>CMS / API</th>
     <td>
-      <img src="https://img.shields.io/badge/WordPress-21759B.svg?logo=wordpress">
+      <img src="https://img.shields.io/badge/WordPress-21759B.svg?logo=wordpress" alt="WordPress">
     </td>
   </tr>
     <tr>
     <th>Deployment</th>
     <td>
-      <img src="https://img.shields.io/badge/Vercel-4C4D59.svg?logo=vercel&logoColor=efefef">
+      <img src="https://img.shields.io/badge/Vercel-4C4D59.svg?logo=vercel&logoColor=efefef" alt="Vercel">
     </td>
   </tr>
   <tr>
     <th>Code Quality</th>
     <td>
-      <img src="https://img.shields.io/badge/ESLint-4B32C3.svg?logo=eslint&logoColor=efefef">
-      <img src="https://img.shields.io/badge/Prettier-59554C.svg?logo=prettier&logoColor=efefef">
-      <img src="https://img.shields.io/badge/Husky-4C4D59.svg">
+      <img src="https://img.shields.io/badge/ESLint-4B32C3.svg?logo=eslint&logoColor=efefef" alt="ESLint">
+      <img src="https://img.shields.io/badge/Prettier-59554C.svg?logo=prettier&logoColor=efefef" alt="Prettier">
+      <img src="https://img.shields.io/badge/Husky-4C4D59.svg" alt="Husky">
     </td>
   </tr>
 </table>
