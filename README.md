@@ -4,7 +4,7 @@
   <img src="./.github/assets/screenshot-desktop.webp" width="74%" alt="Taka's Coffee desktop view">
   <img src="./.github/assets/screenshot-mobile.webp" width="22.3%" alt="Taka's Coffee mobile view">
   <br><br>
-  <a href="https://takascoffee.vercel.app/" target="_blank" rel="noopener noreferrer">
+  <a href="https://takascoffee.vercel.app/">
     <img src="https://img.shields.io/badge/VIEW_DEMO-524433.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="View Demo" />
   </a>
   <br><br>
