@@ -471,34 +471,38 @@ export async function getMenuItemBySlug(slug: string): Promise<MenuDetail | null
 
     // Fetch recommended items if there are any
     if (recommendedIds.length > 0) {
-      const recommendedRes = await fetch(
-        `${apiBaseUrl}/menu?include=${recommendedIds.join(',')}&orderby=include&_embed`
-      );
+      try {
+        const recommendedRes = await fetch(
+          `${apiBaseUrl}/menu?include=${recommendedIds.join(',')}&orderby=include&_embed`
+        );
 
-      if (!recommendedRes.ok) {
-        throw new Error('Failed to fetch recommended menu items');
+        if (!recommendedRes.ok) {
+          throw new Error('Failed to fetch recommended menu items');
+        }
+
+        const rawRecommendedItems: RawRecommendedMenuItem[] = await recommendedRes.json();
+
+        recommendedItems = rawRecommendedItems.map((recommendedItem) => {
+          const featuredMedia = recommendedItem._embedded?.['wp:featuredmedia']?.[0];
+
+          const recommendedImageUrl =
+            featuredMedia?.media_details?.sizes?.full?.source_url ?? featuredMedia?.source_url;
+
+          return {
+            id: recommendedItem.id,
+            slug: recommendedItem.slug,
+            title: recommendedItem.title.rendered,
+            image: recommendedImageUrl
+              ? {
+                  url: recommendedImageUrl,
+                  alt: featuredMedia?.alt_text ?? '',
+                }
+              : undefined,
+          };
+        });
+      } catch (error) {
+        console.error('Error fetching recommended menu items:', error);
       }
-
-      const rawRecommendedItems: RawRecommendedMenuItem[] = await recommendedRes.json();
-
-      recommendedItems = rawRecommendedItems.map((recommendedItem) => {
-        const featuredMedia = recommendedItem._embedded?.['wp:featuredmedia']?.[0];
-
-        const recommendedImageUrl =
-          featuredMedia?.media_details?.sizes?.full?.source_url ?? featuredMedia?.source_url;
-
-        return {
-          id: recommendedItem.id,
-          slug: recommendedItem.slug,
-          title: recommendedItem.title.rendered,
-          image: recommendedImageUrl
-            ? {
-                url: recommendedImageUrl,
-                alt: featuredMedia?.alt_text ?? '',
-              }
-            : undefined,
-        };
-      });
     }
 
     return {
