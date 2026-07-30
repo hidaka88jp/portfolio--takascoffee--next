@@ -57,7 +57,9 @@ In previous projects, I often caught fetch errors and returned an empty array so
 **Adapting to Current Next.js Patterns**<br>
 While working on this project, I learned that Next.js provides rendering and caching approaches based on Cache Components that differ from the methods I had previously learned through tutorials and books. I decided to enable Cache Components in this project and try these different patterns while referring to the official documentation.
 
-When using Cache Components, components that retrieve uncached data at request time need to be placed within a `Suspense` boundary. To follow this pattern, I separated the data-fetching section from the component that defines the overall page structure and rendered it within `Suspense`. I also gained some initial experience with `use cache` and `cacheLife` while implementing the dynamic sitemap, although caching was not a major focus of this project.
+When using Cache Components, components that retrieve uncached data at request time need to be placed within a `Suspense` boundary. To follow this pattern, I separated the data-fetching section from the component that defines the overall page structure and rendered it within `Suspense`.
+
+Most WordPress content was intentionally left uncached so that updates would not have to wait for a configured cache revalidation period. I also gained some initial experience with `use cache` and `cacheLife` while implementing the dynamic sitemap, where immediate updates were less important. Caching was therefore explored selectively rather than being a major focus of this project.
 
 Through this experience, I learned that previously studied approaches do not necessarily apply unchanged to every Next.js project, and I recognized the importance of checking the latest official documentation for the version and configuration being used.
 <br><br>
